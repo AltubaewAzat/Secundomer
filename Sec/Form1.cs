@@ -143,6 +143,7 @@ namespace Sec
             //btnReset.TabIndex = 3;                    
         }
 
+        //удаление строчек из listbox
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
@@ -153,12 +154,7 @@ namespace Sec
                     listBox.Items.RemoveAt(i);
                     _times.RemoveAt(i);
                     lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
-                }
-                //var index = Convert.ToInt32(listBox.SelectedIndex);
-                //listBox.Items.RemoveAt(index);
-                //_times.RemoveAt(index);
-                //lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
-                //this.listBox.Focus();
+                }                
             }
             catch
             {
