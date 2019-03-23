@@ -156,9 +156,9 @@ namespace Sec
                     lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
                 }                
             }
-            catch
+            catch(Exception exception)
             {
-
+                MessageBox.Show(exception.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
