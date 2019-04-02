@@ -1,6 +1,6 @@
 ﻿namespace Sec
 {
-    partial class Form1
+    partial class Form
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -41,6 +41,7 @@
             this.btnReset = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.saveValue = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -155,11 +156,24 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // Form1
+            // saveValue
+            // 
+            this.saveValue.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.saveValue.Location = new System.Drawing.Point(302, 309);
+            this.saveValue.Name = "saveValue";
+            this.saveValue.Size = new System.Drawing.Size(122, 34);
+            this.saveValue.TabIndex = 13;
+            this.saveValue.TabStop = false;
+            this.saveValue.Text = "Save Value";
+            this.saveValue.UseVisualStyleBackColor = true;
+            this.saveValue.Click += new System.EventHandler(this.saveValue_Click);
+            // 
+            // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 417);
+            this.Controls.Add(this.saveValue);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.listBox);
@@ -170,7 +184,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "Form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Спидкубинг таймер";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -198,6 +212,7 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnDelete;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button saveValue;
     }
 }
 

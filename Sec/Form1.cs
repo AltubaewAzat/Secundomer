@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sec
 {
-    public partial class Form1 : Form
+    public partial class Form : System.Windows.Forms.Form
     {
         //start timer
         private DateTime _dateStart; // время старта таймера
         //time array timers
-        private List<double> _times; // сюда сохраняются интервалы времени     
-        public Form1()
+        private List<double> _times; // сюда сохраняются интервалы времени    
+
+        public Form()
         {
             _dateStart = new DateTime();
-            _times = new List<double>();            
-            InitializeComponent();
+            _times = new List<double>();
+            InitializeComponent();            
         }
 
         // во время работы таймера у нас:
@@ -90,11 +90,12 @@ namespace Sec
             _dateStart = DateTime.Now;
             timer1.Enabled = true;
         }
+
         private void StopTimer()
         {
             btnReset.Enabled = true;
             btnDelete.Enabled = true;
-            timer1.Enabled = false;            
+            timer1.Enabled = false;                        
             var time = GetTimeTimer();
             _times.Add(time);
             var textTime = ConvertToTextTime(time);
@@ -105,8 +106,8 @@ namespace Sec
             {
                 listBox.SetSelected(listBox.Items.Count -2, false);
             }
-
         }
+
         private double GetTimeMiddle(List<double> times)
         {
             if (times.Count == 0)
@@ -149,10 +150,10 @@ namespace Sec
             try
             {
                 int[] indexes = listBox.SelectedIndices.OfType<int>().OrderByDescending(i => i).ToArray();
-                foreach (int i in indexes)
+                foreach (int j in indexes)
                 {
-                    listBox.Items.RemoveAt(i);
-                    _times.RemoveAt(i);
+                    listBox.Items.RemoveAt(j);
+                    _times.RemoveAt(j);
                     lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
                 }                
             }
@@ -182,6 +183,21 @@ namespace Sec
                     MessageBox.Show(exception.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }            
-        }       
+        }
+
+        private void saveValue_Click(object sender, EventArgs e)
+        {
+            //var saveValueTime = ConvertToTextTime(_times);
+            using (var sw = new StreamWriter("test.txt", true))
+            {
+                //bool workTimer = timer1.Enabled;
+                //if (!workTimer)
+                foreach (double i in _times)
+                {
+                    ConvertToTextTime(i);
+                    sw.Write(i);
+                }
+            }
+        }
     }
 }
