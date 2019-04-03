@@ -187,11 +187,8 @@ namespace Sec
 
         private void saveValue_Click(object sender, EventArgs e)
         {
-            //var saveValueTime = ConvertToTextTime(_times);
             using (var sw = new StreamWriter("test.txt", true))
             {
-                //bool workTimer = timer1.Enabled;
-                //if (!workTimer)
                 foreach (double i in _times)
                 {
                     var timeText = ConvertToTextTime(i);
