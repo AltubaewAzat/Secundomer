@@ -194,8 +194,8 @@ namespace Sec
                 //if (!workTimer)
                 foreach (double i in _times)
                 {
-                    ConvertToTextTime(i);
-                    sw.Write(i);
+                    var timeText = ConvertToTextTime(i);
+                    sw.Write(timeText);
                 }
             }
         }
