@@ -35,7 +35,7 @@ namespace Sec
         // конвертируем миллисекунды типа double в тип string, для того чтобы вывести их на listBox
         private string ConvertToTextTime(double time)
         {
-            int msec = Convert.ToInt32(time); // воткнул все миллисекунды, преобразованные в int
+            int msec = Convert.ToInt32(time);
             int sec = 0;
             int min = 0;
             if (time <= 100.0)
@@ -96,10 +96,9 @@ namespace Sec
             btnReset.Enabled = true;
             btnDelete.Enabled = true;
             timer1.Enabled = false;                        
-            var time = GetTimeTimer();
-            _times.Add(time);
-            var textTime = ConvertToTextTime(time);
-            listBox.Items.Add(textTime);
+            var time = GetTimeTimer(); //получаем время из таймера в миллисекундах
+            _times.Add(time);            
+            listBox.Items.Add(ConvertToTextTime(time));
             lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
             listBox.SelectedIndex = listBox.Items.Count - 1;
             if (listBox.Items.Count > 1)
@@ -189,10 +188,12 @@ namespace Sec
         {
             using (var sw = new StreamWriter("test.txt", true))
             {
+                int count = 0;
                 foreach (double i in _times)
-                {
+                {                    
                     var timeText = ConvertToTextTime(i);
-                    sw.Write(timeText);
+                    count++;
+                    sw.WriteLine($"{count.ToString()}. {timeText}");
                 }
             }
         }
