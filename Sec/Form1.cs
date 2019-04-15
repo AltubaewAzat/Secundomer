@@ -32,13 +32,13 @@ namespace Sec
             label1.Text = ConvertToTextTime(timeTimer); // конвертируем всё в string и засовываем в основное табло
         }
 
-        // конвертируем миллисекунды типа double в тип string, для того чтобы вывести их на listBox
+        // конвертируем миллисекунды типа double в тип string, для того чтобы вывести их на listBox и табло
         private string ConvertToTextTime(double time)
         {
             int msec = Convert.ToInt32(time);
             int sec = 0;
             int min = 0;
-            if (time <= 100.0)
+            if (msec < 100)
             {
                 msec = Convert.ToInt32(time);
             }
@@ -46,8 +46,8 @@ namespace Sec
             {
                 sec = msec / 100;
                 min = sec / 60;
-                sec %= 60;
                 msec %= 100;
+                msec %= 60;
             }
 
             string msecText = msec.ToString();
@@ -70,7 +70,7 @@ namespace Sec
             return $"{minText}:{secText}:{msecText}";
         }
 
-        // подсчитываем колличество миллисекунд, которое прошло от момента старта до финиша
+        // подсчитываем колличество миллисекунд, которое прошло от момента старта до остановки
         private double GetTimeTimer()
         {
             var start = _dateStart;
