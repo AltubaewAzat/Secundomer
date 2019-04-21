@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -22,16 +20,32 @@ namespace Sec
             _times = new List<double>();
             InitializeComponent();            
         }
-
         // во время работы таймера у нас:
         // 1) работает метод GetTimeTimer(), который подсчитывает нам прошедшие миллисекунды
         // 2) работает основное табло и показывает нам прошедшие секунды
+
         private void timer1_Tick_1(object sender, EventArgs e)
         {
             var timeTimer = GetTimeTimer(); // Дёргаем прошедшее время в миллисекундах
             label1.Text = ConvertToTextTime(timeTimer); // конвертируем всё в string и засовываем в основное табло
+            bool workTimer = timer1.Enabled;
+            if (workTimer)
+            {
+                listBox.Items.Add(ConvertToTextTime(timeTimer));
+            }
+            else
+            {
+                
+            }                           
         }
 
+        // подсчитываем колличество миллисекунд, которое прошло от момента старта до остановки
+        private double GetTimeTimer()
+        {
+            var start = _dateStart;
+            var time = DateTime.Now - start;
+            return time.TotalMilliseconds / 10;
+        }
         // конвертируем миллисекунды типа double в тип string, для того чтобы вывести их на listBox и табло
         private string ConvertToTextTime(double time)
         {
@@ -68,15 +82,7 @@ namespace Sec
                 minText = "0" + minText;
             }
             return $"{minText}:{secText}:{msecText}";
-        }
-
-        // подсчитываем колличество миллисекунд, которое прошло от момента старта до остановки
-        private double GetTimeTimer()
-        {
-            var start = _dateStart;
-            var time = DateTime.Now - start;
-            return time.TotalMilliseconds / 10;
-        }
+        }        
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -90,15 +96,14 @@ namespace Sec
             _dateStart = DateTime.Now;
             timer1.Enabled = true;
         }
-
         private void StopTimer()
         {
             btnReset.Enabled = true;
             btnDelete.Enabled = true;
             timer1.Enabled = false;                        
             var time = GetTimeTimer(); //получаем время из таймера в миллисекундах
-            _times.Add(time);            
-            listBox.Items.Add(ConvertToTextTime(time));
+            _times.Add(time);
+            //listBox.Items.Add(ConvertToTextTime(time));
             lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
             listBox.SelectedIndex = listBox.Items.Count - 1;
             if (listBox.Items.Count > 1)
