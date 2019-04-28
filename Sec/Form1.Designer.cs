@@ -166,7 +166,7 @@
             this.saveValue.TabStop = false;
             this.saveValue.Text = "Save Value";
             this.saveValue.UseVisualStyleBackColor = true;
-            this.saveValue.Click += new System.EventHandler(this.saveValue_Click);
+            //this.saveValue.Click += new System.EventHandler(this.saveValue_Click);
             // 
             // Form
             // 

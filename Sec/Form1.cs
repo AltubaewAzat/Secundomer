@@ -12,13 +12,15 @@ namespace Sec
         //start timer
         private DateTime _dateStart; // время старта таймера
         //time array timers
-        private List<double> _times; // сюда сохраняются интервалы времени    
+        private List<string> _times; // сюда сохраняются интервалы времени          
 
+        double timeTimer = 0;
         public Form()
         {
             _dateStart = new DateTime();
-            _times = new List<double>();
-            InitializeComponent();            
+            _times = new List<string>();
+            InitializeComponent();
+            
         }
         // во время работы таймера у нас:
         // 1) работает метод GetTimeTimer(), который подсчитывает нам прошедшие миллисекунды
@@ -26,17 +28,17 @@ namespace Sec
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
-            var timeTimer = GetTimeTimer(); // Дёргаем прошедшее время в миллисекундах
+            timeTimer = GetTimeTimer(); // Дёргаем прошедшее время в миллисекундах
             label1.Text = ConvertToTextTime(timeTimer); // конвертируем всё в string и засовываем в основное табло
-            bool workTimer = timer1.Enabled;
-            if (workTimer)
-            {
-                listBox.Items.Add(ConvertToTextTime(timeTimer));
-            }
-            else
-            {
+            //bool workTimer = timer1.Enabled;
+            //if (workTimer)
+            //{
+            //    listBox.Items.Add(ConvertToTextTime(timeTimer));
+            //}
+            //else
+            //{
                 
-            }                           
+            //}                           
         }
 
         // подсчитываем колличество миллисекунд, которое прошло от момента старта до остановки
@@ -101,9 +103,9 @@ namespace Sec
             btnReset.Enabled = true;
             btnDelete.Enabled = true;
             timer1.Enabled = false;                        
-            var time = GetTimeTimer(); //получаем время из таймера в миллисекундах
+            var time = label1.Text; //получаем время из таймера в миллисекундах
             _times.Add(time);
-            //listBox.Items.Add(ConvertToTextTime(time));
+            listBox.Items.Add(time);
             lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
             listBox.SelectedIndex = listBox.Items.Count - 1;
             if (listBox.Items.Count > 1)
@@ -112,7 +114,7 @@ namespace Sec
             }
         }
 
-        private double GetTimeMiddle(List<double> times)
+        private double GetTimeMiddle(List<string> times)
         {
             if (times.Count == 0)
             {
@@ -120,15 +122,15 @@ namespace Sec
             }
             else if (times.Count == 1)
             {
-                return times[0];
+                return Convert.ToDouble(times[0]);
             }
             else if (times.Count == 2)
             {
-                return (times[0] + times[1]) / 2.0;
+                return (Convert.ToDouble(times[0] + times[1]) / 2.0);
             }
             else
             {
-                return times.Sum() / Convert.ToDouble(times.Count);
+                return Convert.ToDouble(times.Sum()) / Convert.ToDouble(times.Count);
             }
         }
         
@@ -189,18 +191,18 @@ namespace Sec
             }            
         }
 
-        private void saveValue_Click(object sender, EventArgs e)
-        {
-            using (var sw = new StreamWriter("test.txt", true))
-            {
-                int count = 0;
-                foreach (double i in _times)
-                {                    
-                    var timeText = ConvertToTextTime(i);
-                    count++;
-                    sw.WriteLine($"{count.ToString()}. {timeText}");
-                }
-            }
-        }
+        //private void saveValue_Click(object sender, EventArgs e)
+        //{
+        //    using (var sw = new StreamWriter("test.txt", true))
+        //    {
+        //        int count = 0;
+        //        foreach (double i in _times)
+        //        {                    
+        //            var timeText = ConvertToTextTime(i);
+        //            count++;
+        //            sw.WriteLine($"{count.ToString()}. {timeText}");
+        //        }
+        //    }
+        //}
     }
 }
