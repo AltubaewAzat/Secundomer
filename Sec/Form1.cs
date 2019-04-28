@@ -9,46 +9,30 @@ namespace Sec
 {
     public partial class Form : System.Windows.Forms.Form
     {
-        //start timer
         private DateTime _dateStart; // время старта таймера
-        //time array timers
-        private List<string> _times; // сюда сохраняются интервалы времени          
+        private List<double> _times; // сюда сохраняются интервалы времени        
+        private double timeTimerMilliseconds; // сюда передаём время в миллисекундах, а потом помещаем в label1 и listBox
 
-        double timeTimer = 0;
         public Form()
         {
             _dateStart = new DateTime();
-            _times = new List<string>();
-            InitializeComponent();
-            
+            _times = new List<double>();
+            InitializeComponent();            
         }
-        // во время работы таймера у нас:
-        // 1) работает метод GetTimeTimer(), который подсчитывает нам прошедшие миллисекунды
-        // 2) работает основное табло и показывает нам прошедшие секунды
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
-            timeTimer = GetTimeTimer(); // Дёргаем прошедшее время в миллисекундах
-            label1.Text = ConvertToTextTime(timeTimer); // конвертируем всё в string и засовываем в основное табло
-            //bool workTimer = timer1.Enabled;
-            //if (workTimer)
-            //{
-            //    listBox.Items.Add(ConvertToTextTime(timeTimer));
-            //}
-            //else
-            //{
-                
-            //}                           
+            timeTimerMilliseconds = GetTimeTimer(); 
+            label1.Text = ConvertToTextTime(timeTimerMilliseconds);                                     
         }
 
-        // подсчитываем колличество миллисекунд, которое прошло от момента старта до остановки
         private double GetTimeTimer()
         {
             var start = _dateStart;
             var time = DateTime.Now - start;
             return time.TotalMilliseconds / 10;
         }
-        // конвертируем миллисекунды типа double в тип string, для того чтобы вывести их на listBox и табло
+        
         private string ConvertToTextTime(double time)
         {
             int msec = Convert.ToInt32(time);
@@ -93,19 +77,21 @@ namespace Sec
                
         private void StartTimer()
         {
+            btnSaveValue.Enabled = false;
             btnReset.Enabled = false;
             btnDelete.Enabled = false;            
             _dateStart = DateTime.Now;
             timer1.Enabled = true;
         }
+
         private void StopTimer()
         {
+            btnSaveValue.Enabled = true;
             btnReset.Enabled = true;
             btnDelete.Enabled = true;
-            timer1.Enabled = false;                        
-            var time = label1.Text; //получаем время из таймера в миллисекундах
-            _times.Add(time);
-            listBox.Items.Add(time);
+            timer1.Enabled = false;                      
+            _times.Add(timeTimerMilliseconds);
+            listBox.Items.Add(ConvertToTextTime(timeTimerMilliseconds));
             lblMidValue.Text = ConvertToTextTime(GetTimeMiddle(_times));
             listBox.SelectedIndex = listBox.Items.Count - 1;
             if (listBox.Items.Count > 1)
@@ -113,8 +99,7 @@ namespace Sec
                 listBox.SetSelected(listBox.Items.Count -2, false);
             }
         }
-
-        private double GetTimeMiddle(List<string> times)
+        private double GetTimeMiddle(List<double> times)
         {
             if (times.Count == 0)
             {
@@ -122,15 +107,11 @@ namespace Sec
             }
             else if (times.Count == 1)
             {
-                return Convert.ToDouble(times[0]);
-            }
-            else if (times.Count == 2)
-            {
-                return (Convert.ToDouble(times[0] + times[1]) / 2.0);
-            }
+                return times[0];
+            }           
             else
             {
-                return Convert.ToDouble(times.Sum()) / Convert.ToDouble(times.Count);
+                return times.Sum() / Convert.ToDouble(times.Count);
             }
         }
         
@@ -149,8 +130,7 @@ namespace Sec
             //listBox.TabIndex = 2;            
             //btnReset.TabIndex = 3;                    
         }
-
-        //удаление строчек из listbox
+      
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
@@ -168,6 +148,7 @@ namespace Sec
                 MessageBox.Show(exception.ToString(), "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {            
             if (e.KeyCode == Keys.Space)
@@ -191,18 +172,19 @@ namespace Sec
             }            
         }
 
-        //private void saveValue_Click(object sender, EventArgs e)
-        //{
-        //    using (var sw = new StreamWriter("test.txt", true))
-        //    {
-        //        int count = 0;
-        //        foreach (double i in _times)
-        //        {                    
-        //            var timeText = ConvertToTextTime(i);
-        //            count++;
-        //            sw.WriteLine($"{count.ToString()}. {timeText}");
-        //        }
-        //    }
-        //}
+        private void btnSaveValue_Click(object sender, EventArgs e)
+        {
+            btnSaveValue.Enabled = false;
+            using (var sw = new StreamWriter("test.txt", true))
+            {
+                int count = 0;
+                foreach (double i in _times)
+                {
+                    var timeText = ConvertToTextTime(i);
+                    count++;
+                    sw.WriteLine($"{count.ToString()}. {timeText}");
+                }
+            }            
+        }
     }
 }

@@ -41,7 +41,7 @@
             this.btnReset = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.saveValue = new System.Windows.Forms.Button();
+            this.btnSaveValue = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -156,24 +156,24 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // saveValue
+            // btnSaveValue
             // 
-            this.saveValue.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.saveValue.Location = new System.Drawing.Point(302, 309);
-            this.saveValue.Name = "saveValue";
-            this.saveValue.Size = new System.Drawing.Size(122, 34);
-            this.saveValue.TabIndex = 13;
-            this.saveValue.TabStop = false;
-            this.saveValue.Text = "Save Value";
-            this.saveValue.UseVisualStyleBackColor = true;
-            //this.saveValue.Click += new System.EventHandler(this.saveValue_Click);
+            this.btnSaveValue.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnSaveValue.Location = new System.Drawing.Point(302, 309);
+            this.btnSaveValue.Name = "btnSaveValue";
+            this.btnSaveValue.Size = new System.Drawing.Size(122, 34);
+            this.btnSaveValue.TabIndex = 13;
+            this.btnSaveValue.TabStop = false;
+            this.btnSaveValue.Text = "Save Value";
+            this.btnSaveValue.UseVisualStyleBackColor = true;
+            this.btnSaveValue.Click += new System.EventHandler(this.btnSaveValue_Click);
             // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 417);
-            this.Controls.Add(this.saveValue);
+            this.Controls.Add(this.btnSaveValue);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.listBox);
@@ -212,7 +212,7 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnDelete;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Button saveValue;
+        private System.Windows.Forms.Button btnSaveValue;
     }
 }
 
